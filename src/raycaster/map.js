@@ -24,6 +24,7 @@ export default class Map {
         this.map.forEach((row, y) => {
             row.forEach((point, x) => {
                 r.rect(x * scale, y * scale, scale, scale, point ? "gray" : "white");
+                r.rect(x * scale, y * scale, scale, scale, { lineWidth : "1px", strokeStyle : "black" }, false);
             })
         })
     }
