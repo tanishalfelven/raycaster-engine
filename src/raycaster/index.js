@@ -1,11 +1,10 @@
-import r from "../renderer";
 import Player from "./player";
 import Map from "./map";
 
 export default {
     init() {
-        this.player = new Player();
         this.map = Map.getMap();
+        this.player = new Player(this.map.getStartPos());
     },
 
     update() {
@@ -13,6 +12,7 @@ export default {
     },
 
     render() {
-        
+        // TODO get raycasting working. For now, we have a 2d map
+        this.map.render();
     }
 }
