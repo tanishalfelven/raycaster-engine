@@ -1,6 +1,7 @@
 import r from './renderer';
 import raycaster from "./raycaster/index";
 import Delta from './delta';
+import inputHandler from "./inputHandler";
 /* global window */
 
 /**
@@ -9,6 +10,7 @@ import Delta from './delta';
 export default {    
     init(canvas) {
         r.init(canvas);
+        inputHandler.init();
         raycaster.init();
 
         this.delta = new Delta();
@@ -19,8 +21,9 @@ export default {
         window.requestAnimationFrame(this.loop.bind(this));
         
         if (this.delta.ready()) {
-            raycaster.render();
+            this.update();
 
+            raycaster.render();
             r.render();
         }
     },

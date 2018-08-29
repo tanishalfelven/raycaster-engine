@@ -46,8 +46,8 @@ export default class Map {
         ], {
             // coordinates are defined from top left of the map to the bottom right
             startPos : {
-                x : 1,
-                y : 1
+                x : 1.5,
+                y : 1.5
             }
         });
     }

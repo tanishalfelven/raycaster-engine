@@ -14,5 +14,6 @@ export default {
     render() {
         // TODO get raycasting working. For now, we have a 2d map
         this.map.render();
+        this.player.render();
     }
 }
