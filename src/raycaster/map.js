@@ -2,7 +2,7 @@ import r from "../renderer";
 
 /**
  * Map is an interface to the underlying data structure that represents maps (right now), a 2d array.
- * @typedef {{ x : number, y : number }} Position 
+ * @typedef {{ x : number, y : number }} Point
  */
 export default class Map {
     constructor(map, cfg) {
@@ -12,7 +12,7 @@ export default class Map {
 
     /**
      * 
-     * @return {Position} get starting position
+     * @return {Point} get starting position
      */
     getStartPos() {
         return this.startPos;
