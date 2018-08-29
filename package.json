@@ -1,0 +1,20 @@
+{
+  "name": "raycaster-engine",
+  "version": "0.0.1",
+  "description": "A lightweight, browser based raycasting engine. Lots of plans and things to do, we'll see where we get with it all though :p",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack -d --watch"
+  },
+  "keywords": [],
+  "author": "tanishalfelven",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^5.4.0",
+    "eslint-plugin-import": "^2.14.0",
+    "webpack": "^4.17.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.0"
+  }
+}
