@@ -4,7 +4,7 @@ import Map from "./map";
 export default {
     init() {
         this.map = Map.getMap();
-        this.player = new Player(this.map.getStartPos());
+        this.player = new Player(this.map.getStartPos(), this.map);
     },
 
     update() {
