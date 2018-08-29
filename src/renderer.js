@@ -68,6 +68,23 @@ export default {
     },
 
     /**
+     * Draw a line from two points
+     * @param {number} x1 x position for first point
+     * @param {number} y1 y position for first point
+     * @param {number} x2 
+     * @param {number} y2 
+     * @param {string} strokeStyle 
+     */
+    line(x1, y1, x2, y2, strokeStyle = "black") {
+        if (strokeStyle && strokeStyle !== this.bc.strokeStyle) this.bc.strokeStyle = strokeStyle;
+
+        this.bc.beginPath();
+        this.bc.moveTo(x1, y1);
+        this.bc.lineTo(x2, y2);
+        this.bc.stroke();
+    },
+
+    /**
      * Clears buffer context to `cfg.clearColor`
      */
     clear() {
