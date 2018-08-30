@@ -42,23 +42,32 @@ export default {
     },
 
     /**
+     * Override current styles. If fill, replace fillStyle with style. If not fill, then attempt to overwrite lineWidth and strokeStyle
+     * @typedef {string | { lineWidth : string, strokeStyle : string }} Style
+     * @param {Style} style Override style
+     */
+    setStyle(style, fill) {
+        if (style) {
+            if (fill && typeof style === "string") {
+                this.bc.fillStyle = style;
+            } else if (typeof style === "object") {
+                if (style.lineWidth)   this.bc.lineWidth   = style.lineWidth;
+                if (style.strokeStyle) this.bc.strokeStyle = style.strokeStyle;
+            }
+        }
+    },
+
+    /**
      * Render defined rectangle
      * @param {number} x 
      * @param {number} y 
      * @param {number} width 
      * @param {number} height 
-     * @param {string | object} [style] Optional style. Will only be set if not equal to current style.
+     * @param {Style} [style] Optional style. Will only be set if not equal to current style.
      * @param {boolean} [fill]
      */
     rect(x, y, width, height, style, fill = true) {
-        if (style) {
-            if (fill) {
-                this.bc.fillStyle = style;
-            } else {
-                if (style.lineWidth)   this.bc.lineWidth   = style.lineWidth;
-                if (style.strokeStyle) this.bc.strokeStyle = style.strokeStyle;
-            }
-        }
+        this.setStyle(style, fill);
 
         if (fill) {
             this.bc.fillRect(x, y, width, height);
@@ -75,13 +84,41 @@ export default {
      * @param {number} y2 
      * @param {string} strokeStyle 
      */
-    line(x1, y1, x2, y2, strokeStyle = "black") {
-        if (strokeStyle && strokeStyle !== this.bc.strokeStyle) this.bc.strokeStyle = strokeStyle;
+    line(x1, y1, x2, y2, stroke = { lineWidth : "1px", strokeStyle : "black" }) {
+        this.setStyle(stroke, false);
 
         this.bc.beginPath();
         this.bc.moveTo(x1, y1);
         this.bc.lineTo(x2, y2);
         this.bc.stroke();
+    },
+
+    /**
+     * Given n points render a polygon by connecting given points;
+     * @typedef {{x : number, y : number}} Point
+     * @param {Point[]} points 
+     * @param {Style} style 
+     * @param {boolean} fill 
+     */
+    polygon(points, style, fill = true) {
+        const self = this;
+        this.setStyle(style, fill);
+
+        this.bc.beginPath();
+        points.forEach((p, i) => {
+            if (i === 0) {
+                self.bc.moveTo(p.x, p.y);
+            } else {
+                self.bc.lineTo(p.x, p.y);
+            }
+        });
+
+        if (fill) {
+            this.bc.fill();
+        } else {
+            this.bc.closePath();
+            this.bc.stroke();
+        }
     },
 
     /**
