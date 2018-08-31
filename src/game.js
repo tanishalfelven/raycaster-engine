@@ -26,9 +26,7 @@ export default {
         
         if (this.delta.ready()) {
             this.update();
-
-            raycaster.render();
-            r.render();
+            this.render();
         }
     },
 
@@ -41,5 +39,7 @@ export default {
         this.map.render();
         this.player.render();
         this.raycaster.render();
+
+        r.render();
     }
 };

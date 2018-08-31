@@ -10,8 +10,12 @@ export default class RayCaster {
         this.player = player;
     }
 
+    update() {
+        return 1;
+    }
+
     render() {
-        //
+        return 1;
     }
 }
 
