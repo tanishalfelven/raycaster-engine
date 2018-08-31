@@ -1,8 +1,8 @@
-import r from './renderer';
+import r from './lib/renderer';
 import raycaster from "./raycaster/raycaster";
-import Delta from './delta';
+import Delta from './lib/delta';
 import inputHandler from "./inputHandler";
-import Section from "./raycaster/section";
+import Section from "./lib/math/section";
 import Player from "./raycaster/player";
 /* global window */
 
@@ -14,7 +14,7 @@ export default {
         r.init(canvas);
         inputHandler.init();
         this.map = Section.getSection();
-        this.player = new Player({ x : 2, y : 2 });
+        this.player = new Player(2, 2);
         this.raycaster = new raycaster(this.map, this.player);
 
         this.delta = new Delta();

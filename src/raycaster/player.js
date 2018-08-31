@@ -1,24 +1,18 @@
-import r from "../renderer";
+import r from "../lib/renderer";
 import inputHandler from "../inputHandler";
 import cfg from "../config";
-import util from "../util";
+import util from "../lib/util";
+import Ray from "../lib/math/ray";
 
-export default class Player {
-    constructor(pos, map) {
-        this.x = pos.x;
-        this.y = pos.y;
-        this.rotation = 0;
+export default class Player extends Ray {
+    constructor(x, y) {
+        super(x, y, 0);
         this.fov = util.toRadians(60);
-        this.map = map;
-    }
-
-    rotate(distance) {
-        this.rotation = util.wrapRadian(this.rotation + distance);
+        this.moveSpeed = 0.05;
     }
 
     update() {
-        const moveSpeed = 0.05;
-        const deltaPos = util.projectAngleFromPoint(this.rotation, moveSpeed);
+        const deltaPos = this.project(this.moveSpeed);
         // TODO account for lag with rendering
 
         if (inputHandler.isPressed("w")) { // forwards
@@ -50,12 +44,12 @@ export default class Player {
         );
 
         // get projected point to visually track rotation
-        const rotPoint = util.projectAngleFromPoint(this.rotation, 1);
+        const rotPoint = this.project(1);
         r.line(
             scaledX,
             scaledY,
-            scaledX + (rotPoint.x * cfg.scale),
-            scaledY + (rotPoint.y * cfg.scale)
+            scaledX + rotPoint.x * cfg.scale,
+            scaledY + rotPoint.y * cfg.scale
         );
     }
 }
