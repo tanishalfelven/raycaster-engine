@@ -4,7 +4,8 @@
   "description": "A lightweight, browser based raycasting engine. Lots of plans and things to do, we'll see where we get with it all though :p",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -d --watch"
+    "start": "webpack -d --watch",
+    "test":  "webpack ./src/test.js -o \"./dist/test.js\" && node \"./dist/test.js\""
   },
   "keywords": [],
   "author": "tanishalfelven",
