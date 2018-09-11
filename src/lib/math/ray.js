@@ -23,6 +23,7 @@ export default class Ray extends Point {
     project(radius, offset = 0) {
         return new Point( 
             Math.cos(this.angle + offset) * radius, 
+            // negative to transform to screen
             Math.sin(-this.angle + offset) * radius
         );
     }
@@ -34,51 +35,20 @@ export default class Ray extends Point {
      * @return {boolean}
      */
     intersectsLine(line) {
-        const rayDirection = this.add(this.project(5));
-        const p1 = this; 
-        // const p2 = this.add(rayDirection); 
-        const d = rayDirection;
-
-        const e = line.b.subtract(line.a);
-        let normal = new Point(e.y, -e.x);
-        normal = this.normalize();
-
-        // q = p1 + t * d
-        // dot(normal, q - v1) = 0
-        // dot(normal, p1 - v1) + t * dot(normal, d) = 0
-        const numerator = normal.dot(line.a.subtract(p1));
-        const denominator = normal.dot(d);
-
-        if (denominator === 0) return false;
-
-        const t = numerator.divide(denominator);
-
-        if (t < 0 /* || input.maxFraction < t*/) return false;
-
-        // TODO double check this
-        const q = p1.add(new Point(d.dot(new Point(t))));
-
-        // q = v1 + s * r
-        // s = dot(q - v1, r) / dot(r, r)
-        const r = line.b.minus(line.a);
-        const rr = r.dot(r);
-        if (rr === 0) return false;
-
-        const s = q.minus(line.a).dot(r) / rr;
-        if (s < 0 || 1 < s) return false;
-
-        return true;
-    
-        // * leftover from previous
-        // const ortho = new Point(-rayDirection.y, rayDirection.x);
-        // const aToO = this.subtract(line.a);
-        // const aToB = line.b.subtract(line.a);
-
-        // const denom = aToB.dot(ortho);
-
-        // const t1 = Math.abs(aToB.crossProduct(aToO)) / denom;
-        // const t2 = aToO.dot(ortho) / denom;
-        // return 0 <= t2 && t2 <= 1 && t1 >= 0;
+        const directionalPoint = this.add(this.project(1)); // reference point to do line math
+        const lm = line.slope();
+        const tm = Line.slope(directionalPoint, this);
+        r.monitor("ray slope", tm);
+        let dirString = "";
+        if (lm === 0) {
+            if (line.a.y !== line.b.y) {
+                dirString = "h";
+            }
+            else if (line.a.x !== line.b.x) {
+                dirString = "v";
+            }
+        }
+        r.monitor(`(${line.a.x}, ${line.a.y})(${line.b.x}, ${line.b.y})`, `${lm} ${dirString}`);
     }
 
     /**

@@ -14,6 +14,8 @@ export default {
         this.documentCtx = this.initCanvas(documentCanvas);
         // @type {CanvasRenderingContext2D} shorthand for BufferContext, this is where all rendering calls are rendered to until `this.render` is called
         this.bc = this.initCanvas(document.createElement('canvas'));
+
+        this.monitorData = {};
     },
 
     /**
@@ -77,6 +79,52 @@ export default {
     },
 
     /**
+     * Add string to be placed in canvas window to monitor
+     * @param {string} key
+     * @param {string} value 
+     */
+    monitor(key, value) {
+        this.monitorData[key] = value;
+    },
+
+    /**
+     * Render all monitor data in one pass
+     */
+    renderMonitorData() {
+        const self = this;
+        // initialize y to highest line point for all debug monitors
+        let y = this.bc.height - (Object.keys(this.monitorData).length * cfg.dFontHeight);
+        
+        // set text fill style once
+        this.setTextFillStyle();
+
+        Object.keys(this.monitorData).forEach((e) => {
+            // determine amount of spacing required to create length equal to cfg.dMaxAlignSpace
+            const alignSpace = " ".repeat(cfg.dMaxAlignSpace - (e.length));
+
+            // draw then update y for next render
+            self.text(`${e}:${alignSpace}${self.monitorData[e]}`, 2, y);
+            y += cfg.dFontHeight;
+        });
+    },
+
+    setTextFillStyle() {
+        this.bc.fillStyle = "white";
+        // TODO be more flexible with font stuff
+        this.bc.font = `${cfg.dFontHeight}px Consolas`;
+    },
+
+    /**
+     * Draw text at given position
+     * @param {string} text string to render
+     * @param {number} x 
+     * @param {number} y 
+     */
+    text(text, x, y) {
+        this.bc.fillText(text, x, y);
+    },
+
+    /**
      * Draw a line from two points
      * @param {number} x1 x position for first point
      * @param {number} y1 y position for first point
@@ -97,7 +145,7 @@ export default {
      * Given n points render a polygon by connecting given points;
      * @typedef {{x : number, y : number}} Point
      * @param {Point[]} points 
-     * @param {Style} style 
+     * @param {Style} style
      * @param {boolean} fill 
      */
     polygon(points, style, fill = true) {
@@ -126,12 +174,16 @@ export default {
      */
     clear() {
         this.rect(0, 0, cfg.width, cfg.height, 'black');
+        // clear all stored monitor data
+        this.monitorData = {};
     },
 
     /**
      * Renders buffer context to document canvas, then clears buffer context for new frame.
      */
     render() {
+        this.renderMonitorData();
+
         this.documentCtx.drawImage(this.bc.canvas, 0, 0);
         this.clear();
     }

@@ -15,6 +15,16 @@ export default class Line {
         }
     }
 
+    slope() {
+        return Line.slope(this.a, this.b);
+    }
+
+    static slope(a, b) {
+        if (a.x === b.x) return 0;
+        // negative to transform to screen
+        return -(a.y - b.y) / (a.x - b.x);
+    }
+
     // TODO implement
     // /**
     //  * Get distance to point from line

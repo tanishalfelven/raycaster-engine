@@ -24,7 +24,7 @@ export default class Player extends Ray {
         }
 
         // TODO handle rotation with mouse movements
-        const rotateSpeed = 0.02;
+        const rotateSpeed = 0.05;
         if (inputHandler.isPressed("a")) { // left
             this.rotate(rotateSpeed)
         } else if (inputHandler.isPressed("d")) { // right
