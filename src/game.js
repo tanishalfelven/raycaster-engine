@@ -1,24 +1,26 @@
 import r from './lib/renderer';
 import raycaster from "./raycaster/raycaster";
 import Delta from './lib/delta';
-import inputHandler from "./inputHandler";
+import inputHandler from "./lib/inputHandler";
 import Section from "./lib/math/section";
 import Player from "./raycaster/player";
 /* global window */
 
 /**
- * Main/Game is the owner of the game loop and controls sub-modules
+ * Main/Game is the owner of the g  ame loop and controls sub-modules
  */
 export default {    
     init(canvas) {
         r.init(canvas);
-        inputHandler.init();
+        inputHandler.init(canvas);
         this.map = Section.getSection();
         this.player = new Player(2, 2);
         this.raycaster = new raycaster(this.map, this.player);
 
         this.delta = new Delta();
         this.loop();
+
+        return this;
     },
 
     loop() {

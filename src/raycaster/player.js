@@ -1,5 +1,5 @@
 import r from "../lib/renderer";
-import inputHandler from "../inputHandler";
+import inputHandler from "../lib/inputHandler";
 import cfg from "../config";
 import util from "../lib/util";
 import Ray from "../lib/math/ray";

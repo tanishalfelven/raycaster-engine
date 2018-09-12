@@ -4,7 +4,24 @@
  * Simple input handler interface. Updates asyncronous of game animation code.
  */
 export default {
-    init() {
+    init(canvas) {
+        this.canvas = canvas;
+        this.initMouseLock();
+        this.initKeyTracker();
+    },
+
+    capture() {
+        this.canvas.requestPointerLock();
+    },
+
+    initMouseLock() {
+        // register events
+
+        // capture mouse/fullscreen
+        this.capture();
+    },
+
+    initKeyTracker() {
         const keytracker = {};
 
         window.addEventListener("keydown", e => {
