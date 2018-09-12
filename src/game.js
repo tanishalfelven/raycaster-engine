@@ -36,9 +36,9 @@ export default {
     },
 
     render() {
+        this.raycaster.render();
         this.map.render();
         this.player.render();
-        this.raycaster.render();
 
         r.render();
     }

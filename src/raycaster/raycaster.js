@@ -23,7 +23,7 @@ export default class RayCaster {
             const wallDist = this.player.getNearestLineDistance(this.map, offset);
             
             if (wallDist) {
-                this.visibleWalls.push([wallDist, offset]);
+                this.visibleWalls.push(wallDist * Math.cos(offset));
             }
 
             offset += stepAngle;
@@ -31,9 +31,21 @@ export default class RayCaster {
     }
 
     render() {
-        this.visibleWalls.forEach((wall) => {
-            const int = this.player.add(this.player.project(...wall));
-            r.line(this.player.x * cfg.scale, this.player.y * cfg.scale, int.x * cfg.scale, int.y * cfg.scale,  { lineWidth : "3px", strokeStyle : "blue" });
+        const wallHeight = 10;
+        const projectionPlayDist = 100;
+        this.visibleWalls.forEach((distance, i) => {
+            const height = wallHeight / distance * projectionPlayDist;
+
+            r.rect(
+                (319 - i)/320 * cfg.width, 
+                cfg.height/2 - height/2, 
+                cfg.width/320, 
+                height, 
+                "green"
+            );
+
+            // const int = this.player.add(this.player.project(...wall));
+            // r.line(this.player.x * cfg.scale, this.player.y * cfg.scale, int.x * cfg.scale, int.y * cfg.scale,  { lineWidth : "3px", strokeStyle : "blue" });
         });
     }
 }

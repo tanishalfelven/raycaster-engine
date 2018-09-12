@@ -8,7 +8,7 @@ export default class Player extends Ray {
     constructor(x, y) {
         super(x, y, 0);
         this.fov = util.toRadians(60);
-        this.moveSpeed = 0.05;
+        this.moveSpeed = 0.03;
     }
 
     update() {
