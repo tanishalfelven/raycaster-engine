@@ -6,13 +6,8 @@ export default class Line {
      * @param {Point} b 
      */
     constructor(a, b) {
-        if (b.distanceFromOrigin() < a.distanceFromOrigin()) {
-            this.b = a;
-            this.a = b;
-        } else {
-            this.a = a;
-            this.b = b;
-        }
+        this.a = a;
+        this.b = b;
     }
 
     slope() {
@@ -22,7 +17,11 @@ export default class Line {
     static slope(a, b) {
         if (a.x === b.x) return 0;
         // negative to transform to screen
-        return -(a.y - b.y) / (a.x - b.x);
+        return (a.y - b.y) / (a.x - b.x);
+    }
+
+    toString() {
+        return `${this.a}${this.b}`;
     }
 
     // TODO implement

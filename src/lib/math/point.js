@@ -8,43 +8,15 @@ export default class Point {
     }
 
     /**
-     * @return {number}
+     * Return distance to given point, assuming it is in ray
+     * @param {Point} point 
      */
-    magnitude() {
-        return Math.sqrt(this.x*this.x - this.y*this.y);
+    distanceFrom(point) {
+        return Math.sqrt(Math.pow(point.x - this.x, 2) + Math.pow(point.y - this.y, 2));
     }
 
-    lengthSq() {
-        return new Point(this.dot(this));
-    }
-
-    normalize() {
-        // TODO double check this shite
-        if (this.lengthSq() > 0) {
-            return this.multiply(new Point(1 / this.magnitude()));
-        }
-    
-        return new Point(0, 0);
-    }
-
-    distanceFromOrigin() {
-        return Math.pow(Math.sqrt(this.x + this.y), 2)
-    }
-
-    /**
-     * @param {Point} point
-     * @return {Point}
-     */
-    crossProduct(point) {
-        return (this.x * point.y) - (this.y * point.x);
-    }
-
-    /**
-     * @param {Point} point
-     * @return {number}
-     */
-    dot(point) {
-        return (this.x * point.x) + (this.y * point.y);
+    toString() {
+        return `(${this.x}, ${this.y})`;
     }
 
     /**

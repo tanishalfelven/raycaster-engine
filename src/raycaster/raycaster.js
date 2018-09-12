@@ -14,12 +14,26 @@ export default class RayCaster {
     }
 
     update() {
-        this.visibleWalls = this.player.findIntersectingLines(this.map);
+        const stepAngle = cfg.fov / cfg.rays;
+        this.visibleWalls = [];
+        let rayIndex = 0;
+        let offset = -cfg.fov / 2;
+
+        for (; rayIndex < cfg.rays; rayIndex++) {
+            const wallDist = this.player.getNearestLineDistance(this.map, offset);
+            
+            if (wallDist) {
+                this.visibleWalls.push([wallDist, offset]);
+            }
+
+            offset += stepAngle;
+        }
     }
 
     render() {
         this.visibleWalls.forEach((wall) => {
-            r.line(wall.a.x * cfg.scale, wall.a.y * cfg.scale, wall.b.x * cfg.scale, wall.b.y * cfg.scale, { lineWidth : "3px", strokeStyle : "blue" });
+            const int = this.player.add(this.player.project(...wall));
+            r.line(this.player.x * cfg.scale, this.player.y * cfg.scale, int.x * cfg.scale, int.y * cfg.scale,  { lineWidth : "3px", strokeStyle : "blue" });
         });
     }
 }

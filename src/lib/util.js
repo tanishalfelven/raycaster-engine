@@ -24,7 +24,10 @@ export default {
         );
     },
 
-    _2pi : Math.PI * 2,
+    _2pi       : Math.PI * 2,
+    _piOver2   : Math.PI / 2,
+    _3piOver2  : Math.PI*3 / 2,
+    _piOver180 : Math.PI / 180,
     /**
      * Wrap radians that are >2pi or <0 to equivalent values
      * @param {number} n radians
@@ -40,7 +43,6 @@ export default {
         return n;
     },
 
-    _piOver180 : Math.PI / 180,
     /**
      * @param {number} n value in degrees
      * @return {number} value in radians

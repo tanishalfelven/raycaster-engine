@@ -24,7 +24,7 @@ export default class Player extends Ray {
         }
 
         // TODO handle rotation with mouse movements
-        const rotateSpeed = 0.05;
+        const rotateSpeed = 0.02;
         if (inputHandler.isPressed("a")) { // left
             this.rotate(rotateSpeed)
         } else if (inputHandler.isPressed("d")) { // right
@@ -41,15 +41,6 @@ export default class Player extends Ray {
             cfg.scale/2, 
             cfg.scale/2, 
             "red"
-        );
-
-        // get projected point to visually track rotation
-        const rotPoint = this.project(1);
-        r.line(
-            scaledX,
-            scaledY,
-            scaledX + rotPoint.x * cfg.scale,
-            scaledY + rotPoint.y * cfg.scale
         );
     }
 }

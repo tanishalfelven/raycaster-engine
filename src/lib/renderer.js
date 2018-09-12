@@ -100,7 +100,10 @@ export default {
 
         Object.keys(this.monitorData).forEach((e) => {
             // determine amount of spacing required to create length equal to cfg.dMaxAlignSpace
-            const alignSpace = " ".repeat(cfg.dMaxAlignSpace - (e.length));
+            let alignSpace = "";
+            if (e.length < cfg.dMaxAlignSpace) {
+                alignSpace = " ".repeat(cfg.dMaxAlignSpace - (e.length));
+            }
 
             // draw then update y for next render
             self.text(`${e}:${alignSpace}${self.monitorData[e]}`, 2, y);
@@ -173,7 +176,7 @@ export default {
      * Clears buffer context to `cfg.clearColor`
      */
     clear() {
-        this.rect(0, 0, cfg.width, cfg.height, 'black');
+        this.rect(0, 0, cfg.width, cfg.height, 'gray');
         // clear all stored monitor data
         this.monitorData = {};
     },
