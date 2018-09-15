@@ -42,5 +42,14 @@ export default class Player extends Ray {
             cfg.scale/2, 
             "red"
         );
+        
+        // get projected point to visually track rotation
+        const rotPoint = this.project(1);
+        r.line(
+            scaledX,
+            scaledY,
+            scaledX + rotPoint.x * cfg.scale,
+            scaledY + rotPoint.y * cfg.scale
+        );
     }
 }
