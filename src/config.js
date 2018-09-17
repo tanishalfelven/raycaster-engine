@@ -6,7 +6,7 @@ export default {
     clearColor : 'white',
     targetFps  : 30,
     scale      : 20,
-    rays       : 320,
+    rays       : 320, // increase for higher resolution
     fov        : util.toRadians(60),
 
     dFontHeight    : 14,

@@ -4,7 +4,7 @@ import Point from "./point";
 import Line from "./line";
 
 /**
- * Data structure to represent map data.
+ * Data structure to represent map data, generally a list of points defining an arbitrary closed figure.
  * Each section serves metadata, and a series of boundaries
  */
 export default class Section {
@@ -83,6 +83,22 @@ export default class Section {
     }
 
     /**
+     * Helper method to define section diamonds
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} width 
+     * @param {number} height 
+     */
+    static diamond(x, y, width, height) {
+        return [
+            new Point(x + width/2, y),
+            new Point(x + width, y + height/2),
+            new Point(x + width/2, y + height),
+            new Point(x, y + height/2)
+        ];
+    }
+
+    /**
      * test function, get test section data
      * TODO create a map creator
      */
@@ -94,7 +110,7 @@ export default class Section {
                 height : 1
             },
             new Section(
-                Section.box(5, 5, 3, 3),
+                Section.diamond(5, 5, 3, 3),
                 {
                     y      : 0,
                     height : 1

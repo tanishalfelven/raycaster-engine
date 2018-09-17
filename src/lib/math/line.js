@@ -10,6 +10,22 @@ export default class Line {
         this.b = b;
     }
 
+    /**
+     * Test if given x value is inside of line
+     * @param {number} x 
+     */
+    xInside(x) {
+        return this.a.x <= x && x <= this.b.x || this.b.x <= x && x <= this.a.x;
+    }
+    
+    /**
+     * Test if given y value is inside of line
+     * @param {number} y 
+     */
+    yInside(y) {
+        return this.a.y <= y && y <= this.b.y || this.b.y <= y && y <= this.a.y;
+    }
+
     slope() {
         return Line.slope(this.a, this.b);
     }

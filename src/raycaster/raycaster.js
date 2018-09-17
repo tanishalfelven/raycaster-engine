@@ -32,20 +32,20 @@ export default class RayCaster {
 
     render() {
         const wallHeight = 10;
+        // TODO fix different viewport sizes having walls with weird height
         const projectionPlayDist = 100;
         this.visibleWalls.forEach((distance, i) => {
             const height = wallHeight / distance * projectionPlayDist;
-
+            
             r.rect(
-                (319 - i)/320 * cfg.width, 
+                (cfg.rays - 1 - i)/cfg.rays * cfg.width, 
                 cfg.height/2 - height/2, 
-                cfg.width/320, 
+                cfg.width/cfg.rays, 
                 height, 
-                "green"
+                // "green"
+                // dummy lighting, makes 3d projections look cooler
+                `hsl(120, 100%, ${100 - ((distance + 8) / 20) * 100}%)`
             );
-
-            // const int = this.player.add(this.player.project(...wall));
-            // r.line(this.player.x * cfg.scale, this.player.y * cfg.scale, int.x * cfg.scale, int.y * cfg.scale,  { lineWidth : "3px", strokeStyle : "blue" });
         });
     }
 }

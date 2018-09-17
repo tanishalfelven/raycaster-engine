@@ -58,26 +58,33 @@ export default class Ray extends Point {
     getIntersect(line, offset = 0) {
         const directionalPoint = this.add(this.project(1, offset)); // reference point to do line math
         const m = Line.slope(directionalPoint, this);
+        const m1 = line.slope();
         
-        if (line.slope() === 0) {
+        if (m1 === 0) {
             if (line.a.y !== line.b.y) {
                 // line is horizontal
-                const lineX = line.a.x;
-                const pY = m*lineX + m*-this.x + this.y;
-                const yInLine = (line.a.y <= pY && pY <= line.b.y || line.b.y <= pY && pY <= line.a.y);
+                const pY = m*line.a.x + m*-this.x + this.y;
 
-                return yInLine && this.isInDirection(lineX, pY, offset) && this.distanceFrom(new Point(lineX, pY));
+                return line.yInside(pY) && this.isInDirection(line.a.x, pY, offset) && this.distanceFrom(new Point(line.a.x, pY));
             } else if (line.a.x !== line.b.x) {
                 // line is vertical
-                const lineY = line.a.y;
-                const pX = (-lineY - m*this.x + this.y)/-m;
-                const xInLine = (line.a.x <= pX && pX <= line.b.x || line.b.x <= pX && pX <= line.a.x);
+                const pX = (-line.a.y - m*this.x + this.y)/-m;
 
-                return xInLine && this.isInDirection(pX, lineY, offset) && this.distanceFrom(new Point(pX, lineY));
+                return line.xInside(pX) && this.isInDirection(pX, line.a.y, offset) && this.distanceFrom(new Point(pX, line.a.y));
             }
         }
 
-        // TODO handle diagonal lines
+        /** 
+         * Variable line solves is just a math expression. After determining both lines in slope intercept form, this determines
+         * the theoretical intersect. Then test if that intersect is valid, if so, return it.
+         * y-solve = {@link http://m.wolframalpha.com/input/?i=%28%28m1*x1+%2B+y+-+y1%29%2Fm1%29+%3D+%28%28m2*x2+%2B+y+-+y2%29%2Fm2%29 }
+         * x-solve = {@link http://m.wolframalpha.com/input/?i=m1*x+-+m*x1+%2B+y1+%3D+m2*x+-+m2*x2+%2B+y2 }
+         */
+        const y = (m*m1*this.x - m*m1*line.a.x + m*line.a.y - m1*this.y)/(m - m1);
+        const x = (m*this.x - m1*line.a.x - this.y + line.a.y)/(m - m1);
+        if (line.xInside(x) && line.yInside(y) && this.isInDirection(x, y, offset)) {
+            return this.distanceFrom(new Point(x, y));
+        }
 
         return false;
     }
@@ -104,6 +111,7 @@ export default class Ray extends Point {
             }
         });
 
-        return Math.min(...intersections);
+        // TODO return metadata (height, y) of section that intersection was found at
+        return Math.min(...intersections); // fix for fishbowl effect
     }
 }
