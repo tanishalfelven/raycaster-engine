@@ -3,15 +3,18 @@
 A lightweight, browser based raycasting engine.
 
 ## Current Features
+ * Line collision code
  * Rendering and detecting walls
- * Moving with WASD
+ * Basic movement
 
 ## In progress/Features being considered
  * Render variable map heights
  * Support on the fly screen size changes
- * Turning with mouse (FPS controls)
+ * Turning with mouse
+ * Looking up and down with mouse
  * Allow for optional ceilings and floors
- * Texture map walls, floors, ceilings
+ * Overhaul math library to use typed arrays. (Requires research, may or may not be a performance improvement)
+ * Texture map walls, floors, ceilings (floors/ceilings are useless without texture mapping OR lighting )
     * Still thinking of how this should work, since walls are defined with only a height.
       * Where should a texture start from?
       * Should textures tile?
@@ -21,6 +24,7 @@ A lightweight, browser based raycasting engine.
  * support empty floors
  * Lighting
  * Interactable entities with AI
+ * Support animated skyboxes
  * Smart parts of map (animated walls, doors, stuff like that. Totally possible to do doors that swing open or slide up and down, or floors/walls that have holes that slide open/closed)
  * multiplayer??
  * multi level section data??
@@ -29,8 +33,9 @@ A lightweight, browser based raycasting engine.
  * On the fly map editing/map creator
  * Hub to share/load maps
 
-## Maybes
+## Maybe?
  * Native port? :grimace:
+ * Mobile controls?
 
 ## Technical considerations for optimization
  * How to optimize rendering multiple walls in the same ray projection, in case of invisible walls?
