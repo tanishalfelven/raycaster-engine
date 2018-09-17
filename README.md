@@ -34,7 +34,7 @@ A lightweight, browser based raycasting engine.
  * Hub to share/load maps
 
 ## Maybe?
- * Native port? :grimace:
+ * Native port? :grimacing:
  * Mobile controls?
 
 ## Technical considerations for optimization
