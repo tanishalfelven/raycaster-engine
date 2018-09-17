@@ -8,6 +8,10 @@ export default class Ray extends Point {
         super(x, y);
         this.angle = angle;
     }
+
+    toString() {
+        return `${super.toString()}(a = ${util.roundNumToPlace(this.angle, 2)}rad)`;
+    }
     
     rotate(distance) {
         this.angle = util.wrapRadian(this.angle + distance);

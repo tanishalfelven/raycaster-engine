@@ -1,3 +1,5 @@
+import util from "../util";
+
 /**
  * Point Vector/Point math object
  */
@@ -16,7 +18,7 @@ export default class Point {
     }
 
     toString() {
-        return `(${this.x}, ${this.y})`;
+        return `(${util.roundNumToPlace(this.x, 2)}, ${util.roundNumToPlace(this.y, 2)})`;
     }
 
     /**

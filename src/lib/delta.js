@@ -5,6 +5,7 @@ const interval = 1000 / cfg.targetFps;
 
 /**
  * Small delta time manager
+ * TODO something isn't right here, do more research
  */
 export default class Delta {
     constructor() {

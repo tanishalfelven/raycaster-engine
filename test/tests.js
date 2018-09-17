@@ -8,9 +8,10 @@ const r = util.toRadians;
 /* global describe, it */
 
 function intersect(ray, ax, ay, bx, by) {
-    return ray.intersectsLine(new Line(new Point(ax, ay), new Point(bx, by)));
+    return ray.getIntersect(new Line(new Point(ax, ay), new Point(bx, by)));
 }
 
+// TODO write tests and fix for running with nodejs (fails with document errors D: )
 describe('Ray', () => {
     describe('#intersectsLine', () => {
         it('should return true when ray intersects line', () => {

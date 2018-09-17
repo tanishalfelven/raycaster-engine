@@ -1,5 +1,5 @@
 "use strict";
-const path    = require('path');
+const path = require('path');
 
 module.exports = {
     mode   : 'development',
@@ -8,4 +8,4 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'gen.bundle.js'
     }
-};
+}

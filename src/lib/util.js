@@ -49,5 +49,16 @@ export default {
      */
     toRadians(n) {
         return n * this._piOver180;
+    },
+
+    /**
+     * Round number to decimal places, `roundNumToPlace(5.1234, 2) => 5.12`
+     * Only used for interface facing numbers
+     * @param {number} num float to round
+     * @param {number} decimalPlaces places to round > after decimal
+     */
+    roundNumToPlace(num, decimalPlaces) {
+        const throttle = Math.pow(10, decimalPlaces);
+        return Math.round(num * throttle) / throttle;
     }
 }
