@@ -55,42 +55,36 @@ export default class Ray extends Point {
 
     /**
      * Check if ray intersects given line
+     * 
+     * Diagonal line solve done through wolfram alpha
+     * y-solve = {@link http://m.wolframalpha.com/input/?i=%28%28m1*x1+%2B+y+-+y1%29%2Fm1%29+%3D+%28%28m2*x2+%2B+y+-+y2%29%2Fm2%29 }
+     * x-solve = {@link http://m.wolframalpha.com/input/?i=m1*x+-+m*x1+%2B+y1+%3D+m2*x+-+m2*x2+%2B+y2 }
      * @param {Line} line 
      * @param {number} offset radian offset to use
      * @return {number} distance to intersect
      */
     getIntersect(line, offset = 0) {
-        const directionalPoint = this.add(this.project(1, offset)); // reference point to do line math
-        const m = Line.slope(directionalPoint, this);
+        const m = Line.slope(this.add(this.project(1, offset)), this);
         const m1 = line.slope();
+
+        let x = line.a.x;
+        let y = line.a.y;
         
         if (m1 === 0) {
             if (line.a.y !== line.b.y) {
                 // line is horizontal
-                const pY = m*line.a.x + m*-this.x + this.y;
-
-                return line.yInside(pY) && this.isInDirection(line.a.x, pY, offset) && this.distanceFrom(new Point(line.a.x, pY));
+                y = m*x + m*-this.x + this.y;
             } else if (line.a.x !== line.b.x) {
                 // line is vertical
-                const pX = (-line.a.y - m*this.x + this.y)/-m;
-
-                return line.xInside(pX) && this.isInDirection(pX, line.a.y, offset) && this.distanceFrom(new Point(pX, line.a.y));
+                x = (-y - m*this.x + this.y)/-m;
             }
+        } else {
+            // line is diagonal
+            y = (m*m1*this.x - m*m1*line.a.x + m*line.a.y - m1*this.y)/(m - m1);
+            x = (m*this.x - m1*line.a.x - this.y + line.a.y)/(m - m1);
         }
 
-        /** 
-         * Variable line solves is just a math expression. After determining both lines in slope intercept form, this determines
-         * the theoretical intersect. Then test if that intersect is valid, if so, return it.
-         * y-solve = {@link http://m.wolframalpha.com/input/?i=%28%28m1*x1+%2B+y+-+y1%29%2Fm1%29+%3D+%28%28m2*x2+%2B+y+-+y2%29%2Fm2%29 }
-         * x-solve = {@link http://m.wolframalpha.com/input/?i=m1*x+-+m*x1+%2B+y1+%3D+m2*x+-+m2*x2+%2B+y2 }
-         */
-        const y = (m*m1*this.x - m*m1*line.a.x + m*line.a.y - m1*this.y)/(m - m1);
-        const x = (m*this.x - m1*line.a.x - this.y + line.a.y)/(m - m1);
-        if (line.xInside(x) && line.yInside(y) && this.isInDirection(x, y, offset)) {
-            return this.distanceFrom(new Point(x, y));
-        }
-
-        return false;
+        return line.xInside(x) && line.yInside(y) && this.isInDirection(x, y, offset) && this.distanceFrom(new Point(x, y));
     }
 
     /**
