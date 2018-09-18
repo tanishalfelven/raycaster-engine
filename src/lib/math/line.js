@@ -39,23 +39,4 @@ export default class Line {
     toString() {
         return `${this.a}${this.b}`;
     }
-
-    // TODO implement
-    // /**
-    //  * Get distance to point from line
-    //  * @param {Point} point
-    //  * @return {number}
-    //  */
-    // distanceFrom(point) {
-
-    // }
-
-    // /**
-    //  * Is point on line?
-    //  * @param {Point} point 
-    //  * @return {boolean}
-    //  */
-    // onLine(point) {
-
-    // }
 }
