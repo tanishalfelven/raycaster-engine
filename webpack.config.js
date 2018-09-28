@@ -3,9 +3,12 @@ const path = require('path');
 
 module.exports = {
     mode   : 'development',
-    entry  : './src/index.js',
+    entry  : {
+        raycaster : './src/raycaster/game.js',
+        editor    : './src/editor/editor.js'
+    },
     output : {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'gen.bundle.js'
+        filename: 'gen-[name].js'
     }
 }

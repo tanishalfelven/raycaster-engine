@@ -22,7 +22,7 @@ export default {
     },
 
     initKeyTracker() {
-        const keytracker = {};
+        const keytracker = this.keytracker = {};
 
         window.addEventListener("keydown", e => {
             keytracker[e.key] = true;
@@ -31,8 +31,6 @@ export default {
         window.addEventListener("keyup", e => {
             keytracker[e.key] = false;
         });
-
-        this.keytracker = keytracker;
     },
 
     /**

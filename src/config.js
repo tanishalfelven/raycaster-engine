@@ -4,7 +4,7 @@ export default {
     width      : util.getWidth(),
     height     : util.getHeight(),
     clearColor : 'white',
-    targetFps  : 30,
+    targetFps  : 10,
     scale      : 20,
     rays       : 320, // increase for higher resolution
     fov        : util.toRadians(60),

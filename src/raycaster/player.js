@@ -8,12 +8,16 @@ export default class Player extends Ray {
     constructor(x, y) {
         super(x, y, 0);
         this.fov = util.toRadians(60);
-        this.moveSpeed = 0.03;
+        this.moveSpeed = 60 / 1000;  // point/msec
+        this.rotateSpeed = 10 * Math.PI / 1000; // rad/sec
     }
 
-    update() {
-        const deltaPos = this.project(this.moveSpeed);
-        // TODO account for lag with rendering
+    /**
+     * 
+     * @param {number} delta timestep relative to current frame
+     */
+    update(delta) {
+        const deltaPos = this.project(this.moveSpeed * delta);
 
         if (inputHandler.isPressed("w")) { // forwards
             this.x += deltaPos.x;
@@ -24,7 +28,7 @@ export default class Player extends Ray {
         }
 
         // TODO handle rotation with mouse movements
-        const rotateSpeed = 0.02;
+        const rotateSpeed = this.rotateSpeed * delta;
         if (inputHandler.isPressed("a")) { // left
             this.rotate(rotateSpeed)
         } else if (inputHandler.isPressed("d")) { // right

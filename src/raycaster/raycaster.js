@@ -1,11 +1,12 @@
 import r from "../lib/renderer";
 import cfg from "../config";
+import Section from "../lib/math/section";
 import Player from "./player";
 
 export default class RayCaster {
     /**
      * @param {Section} map
-     * @param {Player} player 
+     * @param {Player} player
      */
     constructor(map, player) {
         this.map = map;

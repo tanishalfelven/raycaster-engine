@@ -1,5 +1,7 @@
-import cfg from '../config.js';
 /* global document */
+
+// TODO this is gross
+let cfg;
 
 /**
  * Render layer. Handles all drawing magic.
@@ -10,8 +12,11 @@ export default {
      * Init all needed renderer variables
      * @param {HTMLElement} documentCanvas document canvas
      */
-    init(documentCanvas) {  
-        this.documentCtx = this.initCanvas(documentCanvas);
+    init(canvas, _cfg) {
+        // set top level cfg
+        cfg = _cfg;
+
+        this.documentCtx = this.initCanvas(canvas);
         // @type {CanvasRenderingContext2D} shorthand for BufferContext, this is where all rendering calls are rendered to until `this.render` is called
         this.bc = this.initCanvas(document.createElement('canvas'));
 
