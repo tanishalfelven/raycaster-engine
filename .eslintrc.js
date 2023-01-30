@@ -1,9 +1,6 @@
-module.exports = {
+export default {
     extends: "eslint:recommended",
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module"
-    },
+    environment: "es2022",
     rules : {
         "key-spacing" : [
             "error",
